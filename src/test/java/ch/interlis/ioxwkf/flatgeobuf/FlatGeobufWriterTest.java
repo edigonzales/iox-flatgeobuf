@@ -5,6 +5,7 @@ import java.io.File;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import ch.ehi.basics.settings.Settings;
 import ch.interlis.iom.IomObject;
 import ch.interlis.iom_j.Iom_jObject;
 import ch.interlis.iox.IoxException;
@@ -38,6 +39,9 @@ public class FlatGeobufWriterTest {
         File file = new File(TEST_OUT,"foo.fgb");
         try {
             writer = new FlatGeobufWriter(file);
+            Settings settings = new Settings();
+            //settings.setValue(FlatGeobufWriter.FEATURES_COUNT, "1");
+            writer.setFeaturesCount(1); // TODO: Nicht elegant. Als settings in Konstruktur? Settings kennt aber nur String. Interessanter ist aber doch eh dir Frage woher diese Info stammt. 
             writer.write(new StartTransferEvent());
             writer.write(new StartBasketEvent("Test1.Topic1","bid1"));
             writer.write(new ObjectEvent(inputObj));
